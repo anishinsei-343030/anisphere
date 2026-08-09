@@ -1,69 +1,80 @@
-import Image from "next/image";
+import Link from "next/link";
+import { getTrending, getPopular, getAnimeCharacters } from "@/lib/anilist";
+import AnimeCard from "@/components/anime-card";
+import SectionRow from "@/components/section-row";
+import CharacterCard from "@/components/character-card";
 
-export default function Home() {
+export default async function HomePage() {
+  const [trending, popular] = await Promise.all([getTrending(12), getPopular(12)]);
+  const featured = trending[0] ?? popular[0];
+  const icons = featured ? (await getAnimeCharacters(featured.id)).slice(0, 8) : [];
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div>
+      <section className="relative overflow-hidden">
+        <div className="pointer-events-none absolute -left-32 top-0 h-96 w-96 rounded-full bg-neon-pink/20 blur-[120px]" />
+        <div className="pointer-events-none absolute -right-32 bottom-0 h-96 w-96 rounded-full bg-neon-cyan/20 blur-[120px]" />
+
+        <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 py-20 text-center sm:px-6 sm:py-28">
+          <p className="mb-4 rounded-full border border-neon-pink/30 bg-neon-pink/10 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-neon-pink">
+            A home for otaku
           </p>
+          <h1 className="max-w-3xl text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
+            Browse every anime.
+            <br />
+            <span className="bg-gradient-to-r from-neon-pink to-neon-cyan bg-clip-text text-transparent">
+              Meet its characters.
+            </span>
+          </h1>
+          <p className="mt-5 max-w-xl text-muted sm:text-lg">
+            Enter any anime, walk its halls, and meet the cast — every single one with a fun description waiting for you.
+          </p>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/browse"
+              className="rounded-full bg-gradient-to-r from-neon-pink to-neon-purple px-7 py-3 text-sm font-bold text-background shadow-[0_0_30px_rgb(255_47_214/0.35)] transition-transform hover:scale-105"
+            >
+              Start Browsing
+            </Link>
+            <Link
+              href="/random"
+              className="rounded-full border border-neon-cyan/40 bg-neon-cyan/10 px-7 py-3 text-sm font-bold text-neon-cyan transition-colors hover:bg-neon-cyan/20"
+            >
+              🎲 Surprise Me
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {trending.length > 0 && (
+        <div className="mb-10">
+          <SectionRow title="Trending Now" accent="pink">
+            {trending.map((anime) => (
+              <AnimeCard key={anime.id} anime={anime} sizes="200px" />
+            ))}
+          </SectionRow>
         </div>
-      </main>
+      )}
+
+      {popular.length > 0 && (
+        <div className="mb-10">
+          <SectionRow title="All-Time Favorites" accent="cyan">
+            {popular.map((anime) => (
+              <AnimeCard key={anime.id} anime={anime} sizes="200px" />
+            ))}
+          </SectionRow>
+        </div>
+      )}
+
+      {icons.length > 0 && featured && (
+        <div className="mb-14">
+          <SectionRow title="Cast Picks — Enter A Show">
+            {icons.map((character) => (
+              <CharacterCard key={character.id} character={character} />
+            ))}
+          </SectionRow>
+        </div>
+      )}
     </div>
   );
 }
