@@ -10,9 +10,9 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const anime = await getAnime(Number(id));
-  if (!anime) return { title: "Not Found — OtakuHaven" };
+  if (!anime) return { title: "Not Found — AniSphere" };
   return {
-    title: `${animeTitle(anime.title)} — OtakuHaven`,
+    title: `${animeTitle(anime.title)} — AniSphere`,
     description: anime.description.slice(0, 150),
   };
 }

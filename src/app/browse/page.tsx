@@ -63,7 +63,7 @@ export default async function BrowsePage(props: { searchParams: Promise<Record<s
       <header className="mb-8 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">{q || genre ? subtitle : "Browse Anime"}</h1>
-          <p className="mt-1 text-muted">Thousands of shows. One haven to wander through.</p>
+          <p className="mt-1 text-muted">Thousands of shows. One sphere to wander through.</p>
         </div>
         <SearchInput />
       </header>
@@ -119,7 +119,7 @@ export default async function BrowsePage(props: { searchParams: Promise<Record<s
           <p className="text-2xl">🌫️</p>
           <p className="mt-3 font-semibold">Nothing behind that curtain.</p>
           <p className="mt-1 text-sm text-muted">
-            Try a different search or clear the filters — the haven is huge.
+            Try a different search or clear the filters — the sphere is huge.
           </p>
         </div>
       )}

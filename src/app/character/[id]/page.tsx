@@ -20,9 +20,9 @@ function formatFavourites(count: number): string {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const character = await getCharacter(Number(id));
-  if (!character) return { title: "Character — OtakuHaven" };
+  if (!character) return { title: "Character — AniSphere" };
   return {
-    title: `${character.name} — OtakuHaven`,
+    title: `${character.name} — AniSphere`,
     description: character.description.slice(0, 150),
   };
 }

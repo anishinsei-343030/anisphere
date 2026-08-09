@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AniSphere
 
-## Getting Started
+> A home for otaku — browse all anime, enter any anime, meet its characters. Every character gets a fun description.
 
-First, run the development server:
+## Features
+
+- **Browse everything** — search-as-you-type, genre filters, and sorting by trending, popularity, rating, or release date across the whole AniList catalog.
+- **Enter any anime** — banner art (with a neon gradient fallback), stats, synopsis, and the full cast.
+- **Meet the characters** — every character has an official bio **and** a Fun Mode blurb, switchable per device (persisted in localStorage).
+- **Surprise Me** — a truly random anime, one click away.
+- **Favorites** — heart any anime or character; they live in `/favorites` on this device.
+
+## Tech
+
+- Next.js 16 (App Router) + TypeScript + Tailwind CSS 4 + ESLint
+- Data: [AniList GraphQL API](https://graphql.anilist.co), no API key
+- Deployed on Vercel
+
+## Commands
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev      # dev server
+npm run lint     # ESLint (zero warnings)
+npm run build    # production build
+npm run start    # serve the built app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project layout
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/lib/anilist.ts        # AniList data layer: typed queries, HTML stripping, 429 retry, ISR revalidate
+src/lib/fun.ts            # Fun Mode fallback blurb generator
+src/lib/favorites.ts      # localStorage favorites store (external-store pattern)
+src/lib/mode-store.ts     # Fun/Real preference store (external-store pattern)
+data/fun-blurbs.json      # curated Fun Mode blurbs, keyed by AniList character id
+src/components/           # nav, cards, banner fallback, Fun/Real toggle, hearts
+src/app/                  # home, /browse, /anime/[id], /character/[id], /random, /favorites
+```

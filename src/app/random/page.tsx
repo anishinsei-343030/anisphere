@@ -4,8 +4,8 @@ import { getRandomAnime } from "@/lib/anilist";
 import AnimeView from "@/components/anime-view";
 
 export const metadata = {
-  title: "Surprise Me — OtakuHaven",
-  description: "A random anime, fresh from the haven.",
+  title: "Surprise Me — AniSphere",
+  description: "A random anime, fresh from the sphere.",
 };
 
 export default async function RandomPage() {

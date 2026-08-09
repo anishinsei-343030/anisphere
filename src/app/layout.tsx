@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "OtakuHaven — A Home For Otaku",
+  title: "AniSphere — A Home For Otaku",
   description: "Browse all anime, enter any anime, meet its characters. Every character gets a fun description.",
 };
 

@@ -1,4 +1,4 @@
-# OtakuHaven
+# AniSphere
 
 > A home for otaku — browse all anime, enter any anime, meet its characters. Every character gets a fun description.
 
@@ -6,8 +6,8 @@
 
 - **Stack**: Next.js 16 (App Router) + TypeScript + Tailwind CSS 4 + ESLint. Node 20.9+ (project runs Node 24).
 - **Data**: AniList GraphQL API (`https://graphql.anilist.co`), no API key. ~90 req/min public limit.
-- **Deploy**: Vercel. Name: OtakuHaven.
-- **Repo**: own repository at `D:\Zero\Anime` (origin: `anishinsei-343030/otaku-haven`). HQ repo never tracks this folder (gitignored).
+- **Deploy**: Vercel. Name: AniSphere.
+- **Repo**: own repository at `D:\Zero\Projects\Anime` (origin: `anishinsei-343030/anisphere`). HQ repo never tracks this folder (gitignored).
 
 ## Commands
 

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import FavoritesList from "./favorites-list";
 
 export const metadata: Metadata = {
-  title: "Favorites — OtakuHaven",
+  title: "Favorites — AniSphere",
   description: "Your favorite anime and characters, all in one place.",
 };
 

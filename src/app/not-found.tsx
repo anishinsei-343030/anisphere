@@ -6,7 +6,7 @@ export default function NotFound() {
       <p className="text-[100px] leading-none font-black text-transparent bg-gradient-to-r from-neon-pink to-neon-cyan bg-clip-text">
         404
       </p>
-      <h1 className="mt-4 text-2xl font-bold">This one isn&apos;t in the haven.</h1>
+      <h1 className="mt-4 text-2xl font-bold">This one isn&apos;t in the sphere.</h1>
       <p className="mt-2 max-w-md text-muted">
         The anime or character you&apos;re looking for doesn&apos;t exist (or wandered off).
       </p>
