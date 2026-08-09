@@ -24,9 +24,15 @@ export async function gql<TResult>(
       if (!res.ok) {
         throw new Error(`AniList request failed (${res.status})`);
       }
-      const json = (await res.json()) as { data?: TResult; errors?: { message: string }[] };
+      const json = (await res.json()) as {
+        data?: TResult;
+        errors?: { message: string }[];
+      };
       if (json.errors?.length) {
-        throw new Error(json.errors[0].message);
+        if (json.data == null) {
+          throw new Error(json.errors[0].message);
+        }
+        return json.data;
       }
       return json.data as TResult;
     } catch (err) {

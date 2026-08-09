@@ -1,10 +1,10 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { subscribeFavorites, getFavoritesSnapshot, isFavorite, toggleFavorite, type FavoriteItem } from "@/lib/favorites";
+import { subscribeFavorites, getFavoritesSnapshot, getFavoritesServerSnapshot, isFavorite, toggleFavorite, type FavoriteItem } from "@/lib/favorites";
 
 export default function FavoritesButton({ item }: { item: FavoriteItem }) {
-  const favorites = useSyncExternalStore(subscribeFavorites, getFavoritesSnapshot, getFavoritesSnapshot);
+  const favorites = useSyncExternalStore(subscribeFavorites, getFavoritesSnapshot, getFavoritesServerSnapshot);
   const active = isFavorite(favorites, item.kind, item.id);
 
   return (

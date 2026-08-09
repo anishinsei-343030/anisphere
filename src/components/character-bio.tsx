@@ -1,7 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { subscribeMode, getModeSnapshot, setBioMode, type BioMode } from "@/lib/mode-store";
+import { subscribeMode, getModeSnapshot, getModeServerSnapshot, setBioMode, type BioMode } from "@/lib/mode-store";
 
 export default function CharacterBio({
   name,
@@ -12,7 +12,7 @@ export default function CharacterBio({
   funBlurb: string;
   realBio: string;
 }) {
-  const mode = useSyncExternalStore(subscribeMode, getModeSnapshot, getModeSnapshot);
+  const mode = useSyncExternalStore(subscribeMode, getModeSnapshot, getModeServerSnapshot);
 
   const displayBio = mode === "fun" ? funBlurb : realBio || "No bio on record. The fans know the rest.";
 

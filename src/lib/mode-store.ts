@@ -30,6 +30,10 @@ export function getModeSnapshot(): BioMode {
   return snapshot;
 }
 
+export function getModeServerSnapshot(): BioMode {
+  return "fun";
+}
+
 export function setBioMode(next: BioMode): void {
   snapshot = next;
   if (typeof window !== "undefined") {

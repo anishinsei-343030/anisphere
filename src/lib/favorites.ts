@@ -54,6 +54,12 @@ export function getFavoritesSnapshot(): FavoriteItem[] {
   return snapshot;
 }
 
+const SERVER_EMPTY: FavoriteItem[] = [];
+
+export function getFavoritesServerSnapshot(): FavoriteItem[] {
+  return SERVER_EMPTY;
+}
+
 export function toggleFavorite(item: FavoriteItem): void {
   const current = getFavorites();
   const next = isFavorite(current, item.kind, item.id)

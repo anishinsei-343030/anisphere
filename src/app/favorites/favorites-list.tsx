@@ -3,10 +3,10 @@
 import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { subscribeFavorites, getFavoritesSnapshot } from "@/lib/favorites";
+import { subscribeFavorites, getFavoritesSnapshot, getFavoritesServerSnapshot } from "@/lib/favorites";
 
 export default function FavoritesList() {
-  const favorites = useSyncExternalStore(subscribeFavorites, getFavoritesSnapshot, getFavoritesSnapshot);
+  const favorites = useSyncExternalStore(subscribeFavorites, getFavoritesSnapshot, getFavoritesServerSnapshot);
 
   if (!favorites.length) {
     return (
