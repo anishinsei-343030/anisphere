@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Anime } from "@/lib/anilist";
 import { getAnimeCharacters } from "@/lib/anilist";
 import Banner from "@/components/banner";
+import BackButton from "@/components/back-button";
 import CharacterCard from "@/components/character-card";
 import FavoritesButton from "@/components/favorites-button";
 
@@ -11,12 +12,17 @@ export default async function AnimeView({ anime }: { anime: Anime }) {
 
   return (
     <article>
-      <Banner
-        image={anime.bannerImage}
-        title={anime.title.english ?? anime.title.romaji ?? "Anime"}
-        seed={anime.id}
-        className="relative h-56 w-full sm:h-72 lg:h-96"
-      />
+      <div className="relative">
+        <Banner
+          image={anime.bannerImage}
+          title={anime.title.english ?? anime.title.romaji ?? "Anime"}
+          seed={anime.id}
+          className="h-56 w-full sm:h-72 lg:h-96"
+        />
+        <div className="absolute left-4 top-4 z-20 sm:left-6 sm:top-6">
+          <BackButton fallbackHref="/" />
+        </div>
+      </div>
       <div className="relative z-10 mx-auto -mt-20 w-full max-w-7xl px-4 sm:-mt-24 sm:px-6">
         <div className="flex flex-col gap-6 md:flex-row md:gap-8">
           <div className="relative w-40 shrink-0 sm:w-52">

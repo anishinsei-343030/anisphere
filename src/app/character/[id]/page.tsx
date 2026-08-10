@@ -6,6 +6,7 @@ import { getCharacter } from "@/lib/anilist";
 import { getFunBlurb } from "@/lib/fun";
 import CharacterBio from "@/components/character-bio";
 import FavoritesButton from "@/components/favorites-button";
+import BackButton from "@/components/back-button";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -36,6 +37,9 @@ export default async function CharacterPage({ params }: Props) {
 
   return (
     <article className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6">
+      <div className="mb-6">
+        <BackButton fallbackHref={character.appearances[0] ? `/anime/${character.appearances[0].id}` : "/"} />
+      </div>
       <div className="flex flex-col gap-10 md:flex-row md:gap-12">
         <div className="shrink-0 md:w-80">
           <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/10 shadow-[0_10px_50px_rgb(168_85_247/0.25)]">
