@@ -33,7 +33,10 @@ export default async function CharacterPage({ params }: Props) {
   const character = await getCharacter(Number(id));
   if (!character) notFound();
 
-  const funBlurb = getFunBlurb(character.id, character.name);
+  const funBlurb = getFunBlurb(character.id, character.name, {
+    favourites: character.favourites,
+    appearances: character.appearances.map((a) => a.title),
+  });
 
   return (
     <article className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6">
