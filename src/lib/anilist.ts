@@ -21,14 +21,23 @@ export async function gql<TResult>(
         await sleep(RETRY_DELAY_MS * (attempt + 1));
         continue;
       }
+      const text = await res.text();
+      let json: { data?: TResult; errors?: { message: string }[] } | null = null;
+      try {
+        json = JSON.parse(text) as { data?: TResult; errors?: { message: string }[] };
+      } catch {
+        json = null;
+      }
+      if (json == null) {
+        throw new Error(`AniList returned an invalid response (${res.status})`);
+      }
       if (!res.ok) {
+        if (json?.data != null) {
+          return json.data;
+        }
         throw new Error(`AniList request failed (${res.status})`);
       }
-      const json = (await res.json()) as {
-        data?: TResult;
-        errors?: { message: string }[];
-      };
-      if (json.errors?.length) {
+      if (json?.errors?.length) {
         if (json.data == null) {
           throw new Error(json.errors[0].message);
         }
@@ -330,8 +339,12 @@ export function getPopular(perPage = 12): Promise<Anime[]> {
   return pageMedia({ sort: "POPULARITY_DESC", perPage }, 3600);
 }
 
-export function getBrowse(params: BrowseParams): Promise<Anime[]> {
-  return pageMedia(params, 300);
+export async function getBrowse(params: BrowseParams): Promise<Anime[]> {
+  const page = await pageMedia(params, 300);
+  if (!params.search && page.length === 0) {
+    throw new Error("AniList returned an empty page");
+  }
+  return page;
 }
 
 const RANDOM_PAGE_COUNT = 4300;
