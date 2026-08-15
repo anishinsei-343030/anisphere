@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BrokenThing from "@/components/does-not-exist";
 import { getTrending, getPopular, getAnimeCharacters } from "@/lib/anilist";
 import AnimeCard from "@/components/anime-card";
 import SectionRow from "@/components/section-row";
