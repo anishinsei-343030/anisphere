@@ -31,13 +31,8 @@ export async function GET(request: NextRequest) {
   if (!isAllowedStreamHost(url.hostname)) {
     return new Response("host not allowed", { status: 403 });
   }
-
-  const upstreamHeaders: HeadersInit = {
-    "User-Agent": USER_AGENT,
-    Accept: "*/*",
-  };
-  if (ref && /^https?:\/\//i.test(ref)) {
-    upstreamHeaders.Referer = ref;
+  if (ref && !/^https?:\/\//i.test(ref)) {
+    return new Response("invalid ref", { status: 400 });
   }
   const range = request.headers.get("range");
   if (range) (upstreamHeaders as Record<string, string>).Range = range;
