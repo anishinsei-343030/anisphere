@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm audit *)",
+      "Bash(node *)",
+      "Bash(git checkout *)",
+      "Bash(git rm *)",
+      "Bash(git commit *)",
+      "Bash(git add *)"
+    ]
+  }
+}
