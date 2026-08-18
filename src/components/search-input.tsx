@@ -18,12 +18,14 @@ export default function SearchInput({ placeholder = "Search anime..." }: { place
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function handleChange(next: string) {
-    setValue(next);
+    // Allow only alphanumerics, spaces and hyphens, max 80 chars
+    const cleaned = next.replace(/[^a-zA-Z0-9\s-]/g, "").slice(0, 80);
+    setValue(cleaned);
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => {
       const params = new URLSearchParams(searchParams.toString());
-      if (next.trim()) {
-        params.set("q", next.trim());
+      if (cleaned.trim()) {
+        params.set("q", cleaned.trim());
       } else {
         params.delete("q");
       }

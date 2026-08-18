@@ -76,13 +76,18 @@ export function decodeStreamValue(value: string): string | null {
   }
 }
 
+const ALLOWED_STREAM_HOSTS = new Set([
+  "animepahe.ru",
+  "kaa.lt",
+  "kwik.cx",
+  "megaup.net",
+  "krussdomi.com",
+]);
+
 export function isAllowedStreamHost(host: string): boolean {
   const h = host.toLowerCase();
-  return (
-    ["kwik", "pahe", "megaup", "kaa", "kickass-anime", "krussdomi"].some(
-      (part) => h.includes(part),
-    ) || /^st\d+\.[a-z0-9-]+\.xyz$/.test(h)
-  );
+  if (ALLOWED_STREAM_HOSTS.has(h)) return true;
+  return false;
 }
 
 function normalizeTitle(title: string): string {

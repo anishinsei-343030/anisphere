@@ -31,12 +31,15 @@ export async function GET(request: NextRequest) {
   if (!isAllowedStreamHost(url.hostname)) {
     return new Response("host not allowed", { status: 403 });
   }
+  if (ref && !/^https?:\/\//i.test(ref)) {
+    return new Response("invalid ref", { status: 400 });
+  }
 
   const upstreamHeaders: HeadersInit = {
     "User-Agent": USER_AGENT,
     Accept: "*/*",
   };
-  if (ref && /^https?:\/\//i.test(ref)) {
+  if (ref) {
     upstreamHeaders.Referer = ref;
   }
   const range = request.headers.get("range");

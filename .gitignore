@@ -44,3 +44,8 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# claude code local session state
+/.claude
+# local build logs
+/build.log

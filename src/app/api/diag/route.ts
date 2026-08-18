@@ -6,7 +6,8 @@ export async function POST(request: Request): Promise<Response> {
       typeof body.url === "string" &&
       typeof body.message === "string"
     ) {
-      console.log(`[diag] ${body.kind} :: ${body.url} :: ${body.message.slice(0, 500)}`);
+      const path = new URL(body.url).pathname;
+      console.log(`[diag] ${body.kind} :: ${path} :: ${body.message.slice(0, 200).replace(/\s+/g, " ")}`);
       return new Response(null, { status: 204 });
     }
     return new Response("invalid payload", { status: 400 });
