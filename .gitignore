@@ -47,3 +47,5 @@ next-env.d.ts
 
 # claude code local session state
 /.claude
+# local build logs
+/build.log
