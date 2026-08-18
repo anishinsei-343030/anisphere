@@ -34,6 +34,14 @@ export async function GET(request: NextRequest) {
   if (ref && !/^https?:\/\//i.test(ref)) {
     return new Response("invalid ref", { status: 400 });
   }
+
+  const upstreamHeaders: HeadersInit = {
+    "User-Agent": USER_AGENT,
+    Accept: "*/*",
+  };
+  if (ref) {
+    upstreamHeaders.Referer = ref;
+  }
   const range = request.headers.get("range");
   if (range) (upstreamHeaders as Record<string, string>).Range = range;
 
