@@ -17,7 +17,7 @@ export default async function AnimeView({ anime }: { anime: Anime }) {
           image={anime.bannerImage}
           title={anime.title.english ?? anime.title.romaji ?? "Anime"}
           seed={anime.id}
-          className="h-56 w-full sm:h-72 lg:h-96"
+          className="h-32 w-full sm:h-48 lg:h-64"
         />
         <div className="absolute left-4 top-4 z-20 sm:left-6 sm:top-6">
           <BackButton fallbackHref="/" />
@@ -91,6 +91,18 @@ export default async function AnimeView({ anime }: { anime: Anime }) {
                 ))}
               </div>
             ) : null}
+
+            <div className="mt-6">
+              <Link
+                href={`/watch/${anime.id}/1`}
+                className="inline-flex items-center gap-2 rounded-xl bg-neon-cyan px-6 py-3 text-base font-bold text-background shadow-[0_0_30px_rgb(0_229_255/0.35)] transition-all hover:bg-neon-pink hover:shadow-[0_0_30px_rgb(255_0_128/0.35)]"
+              >
+                <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current" aria-hidden="true">
+                  <path d="M8 5.14v13.72L19 12 8 5.14z" />
+                </svg>
+                Watch Now
+              </Link>
+            </div>
 
             {anime.description && (
               <p className="mt-5 max-w-3xl whitespace-pre-line text-[15px] leading-relaxed text-foreground/90">
