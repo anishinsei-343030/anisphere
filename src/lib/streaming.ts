@@ -84,10 +84,14 @@ const ALLOWED_STREAM_HOSTS = new Set([
   "krussdomi.com",
 ]);
 
+const ALLOWED_STREAM_HOST_SUFFIXES = ["krussdomi.com"];
+
 export function isAllowedStreamHost(host: string): boolean {
   const h = host.toLowerCase();
   if (ALLOWED_STREAM_HOSTS.has(h)) return true;
-  return false;
+  return ALLOWED_STREAM_HOST_SUFFIXES.some(
+    (suffix) => h === suffix || h.endsWith(`.${suffix}`),
+  );
 }
 
 function normalizeTitle(title: string): string {
@@ -232,12 +236,15 @@ function fetchSourcesCached(
         const referer = res.headers?.Referer ?? null;
         const seen = new Set<string>();
         return (res.sources ?? [])
-          .map((source) => ({
-            url: String(source.url),
-            quality: String(source.quality ?? ""),
-            isM3U8: Boolean(source.isM3U8),
-            referer,
-          }))
+          .map((source) => {
+            const url = streamProxyUrl(normalizeStreamUrl(String(source.url)), referer);
+            return {
+              url,
+              quality: String(source.quality ?? ""),
+              isM3U8: Boolean(source.isM3U8),
+              referer,
+            };
+          })
           .filter((source) => {
             if (!source.url || seen.has(source.url)) return false;
             seen.add(source.url);
@@ -251,6 +258,12 @@ function fetchSourcesCached(
     ["stream-sources", provider, episodeId],
     { revalidate: 600 },
   )();
+}
+
+function normalizeStreamUrl(value: string): string {
+  const collapsed = value.replace(/^([a-z][a-z0-9+.-]*:)\/{2,}/i, "$1//");
+  const pathCollapsed = collapsed.replace(/([^:/])\/{2,}/g, "$1/");
+  return pathCollapsed;
 }
 
 function parseQuality(quality: string): number {

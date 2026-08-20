@@ -8,7 +8,7 @@ const cspHeader = `
   style-src 'self' 'unsafe-inline';
   img-src 'self' https: data:;
   font-src 'self' https: data:;
-  connect-src 'self' https://graphql.anilist.co;
+  connect-src 'self' https://graphql.anilist.co blob:;
   object-src 'none';
   base-uri 'self';
   form-action 'self';
