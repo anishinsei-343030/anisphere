@@ -237,7 +237,7 @@ function fetchSourcesCached(
         const seen = new Set<string>();
         return (res.sources ?? [])
           .map((source) => {
-            const url = streamProxyUrl(normalizeStreamUrl(String(source.url)), referer);
+            const effectiveReferer = referer ?? `https://${new URL(String(source.url)).hostname}`; const url = streamProxyUrl(normalizeStreamUrl(String(source.url)), effectiveReferer);
             return {
               url,
               quality: String(source.quality ?? ""),
